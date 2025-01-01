@@ -3,12 +3,8 @@ import csv
 import json
 from collections import OrderedDict
 
-print("Welcome to the JSON-CSV Converter.")
-print("This script will convert a JSON file to CSV or a CSV file to JSON")
-
-# SELECT AND OPEN A CSV OR JSON FILE
 try:
-    print("Which file do you want to convert?")
+    print("Input File")
     filename = input("Filename: ")
     extension = filename.split(".")[-1].lower()
     
@@ -30,7 +26,7 @@ except Exception as e:
     print("Error loading file ... exiting:",e)
     exit()
 else:
-    # CONVERT CSV TO JSON
+    print("Convert JSON to CSV")
     if extension == "csv":
         keys = data[0]
         converted = []
