@@ -19,13 +19,14 @@ def scrape_website(url):
         names.append(name_tag.get_text(strip=True))
 
     emails = re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', response.text)
-    phone_numbers = re.findall(r'\+?[0-9]{1,4}?[-.\s\(\)]?([0-9]{1,3})?[-.\s\(\)]?([0-9]{2,4})[-.\s\(\)]?([0-9]{2,4})[-.\s\(\)]?([0-9]{2,4})', response.text)
-    phone_numbers = [''.join(pn) for pn in phone_numbers]
+    
+    # Regex for Bangladeshi phone numbers
+    phone_numbers = re.findall(r'(?:\+8801|01)\d{9}', response.text)
 
     return names, emails, phone_numbers
 
 
-def save_to_csv(names, emails, phone_numbers, url, filename="extracted_data.csv"):
+def save_to_csv(names, emails, phone_numbers, url, filename="Hello World.csv"):
     with open(filename, mode='w', newline='', encoding='utf-8') as file:
         writer = csv.writer(file)
         writer.writerow(["Name", "Email", "Phone Number", "URL"])
@@ -57,9 +58,9 @@ def json_to_csv(json_file, csv_file):
             writer.writerow(data.keys())
             writer.writerow(data.values())
     
-    print(f"Data Extraction {json_file} has been successfully Complete to {csv_file}.")
+    print(f"Data extraction from {json_file} has been successfully completed to {csv_file}.")
 
-choice = input("What is your choice For Website Press W For Json file Press J: ").strip().upper()
+choice = input("What is your choice? For Website, press W. For JSON file, press J: ").strip().upper()
 
 if choice == 'W':
     url = input("Please enter Website URL: ")
@@ -67,7 +68,7 @@ if choice == 'W':
     save_to_csv(names, emails, phone_numbers, url)
 elif choice == 'J':
     json_file = input("Enter the JSON file path: ")
-    csv_file = input("Add a File Name ")
+    csv_file = input("Enter a CSV file name: ")
     json_to_csv(json_file, csv_file)
 else:
-    print("Invalid choice. Data Pull Incomplete Try Again")
+    print("Invalid choice. Data extraction incomplete. Try again.")
