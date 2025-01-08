@@ -17,5 +17,5 @@ def get_squared_numbers(n):
     return sn 
 
 
-n = [1,2,3,4,5]
-get_squared_numbers(n)
+n = [2,5,8,9]
+print(get_squared_numbers(n))
